@@ -1,0 +1,62 @@
+{
+    "name": "ecars",
+    "private": true,
+    "version": "1.0.0",
+    "description": "eCars - Salesforce Platform application demo",
+    "author": "Salesforce Developer Relations",
+    "license": "CC0-1.0",
+    "scripts": {
+        "clean": "lerna clean && rimraf node_modules **/node_modules",
+        "lint": "eslint **/{lwc,apps}/**/*.js",
+        "test": "npm run lint && npm run test:unit && npm run test:services",
+        "test:unit": "lwc-jest --skipApiVersionCheck",
+        "test:unit:watch": "lwc-jest --watch --skipApiVersionCheck",
+        "test:unit:debug": "lwc-jest --debug --skipApiVersionCheck",
+        "test:unit:coverage": "sfdx-lwc-jest --coverage --skipApiVersionCheck",
+        "test:services": "cd apps/ecars-services && npm test",
+        "prettier": "prettier --write \"**/*.{cls,cmp,component,css,html,js,json,md,page,trigger,ts,xml,yaml,yml}\"",
+        "prettier:verify": "prettier --check \"**/*.{cls,cmp,component,css,html,js,json,md,page,trigger,ts,xml,yaml,yml}\"",
+        "postinstall": "lerna exec -- npm install && lerna link && husky install",
+        "precommit": "lint-staged"
+    },
+    "lint-staged": {
+        "**/*.{cls,cmp,component,css,html,js,json,md,page,trigger,xml,yaml,yml}": [
+            "prettier --write"
+        ],
+        "**/{lwc,apps}/**/*.js": [
+            "eslint"
+        ],
+        "**/lwc/**": [
+            "sfdx-lwc-jest --skipApiVersionCheck -- --bail --findRelatedTests"
+        ]
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/trailheadapps/ecars"
+    },
+    "devDependencies": {
+        "@lwc/eslint-plugin-lwc": "^1.1.1",
+        "@prettier/plugin-xml": "^1.1.0",
+        "@sa11y/jest": "^3.1.0",
+        "@salesforce/eslint-config-lwc": "^3.2.1",
+        "@salesforce/eslint-plugin-lightning": "^1.0.0",
+        "@salesforce/sfdx-lwc-jest": "^1.1.0",
+        "@typescript-eslint/eslint-plugin": "^5.7.0",
+        "@typescript-eslint/parser": "^5.7.0",
+        "eslint": "^7.32.0",
+        "eslint-config-prettier": "^8.3.0",
+        "eslint-plugin-import": "^2.25.3",
+        "eslint-plugin-jest": "^25.3.0",
+        "husky": "^7.0.4",
+        "lerna": "^4.0.0",
+        "lint-staged": "^12.1.2",
+        "prettier": "^2.5.1",
+        "prettier-plugin-apex": "^1.10.0",
+        "rimraf": "^3.0.2",
+        "typescript": "^4.5.3"
+    },
+    "volta": {
+        "node": "14.18.2",
+        "npm": "6.14.15"
+    }
+}
